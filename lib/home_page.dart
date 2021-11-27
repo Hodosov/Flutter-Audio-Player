@@ -3,6 +3,7 @@ import 'dart:ffi';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:getx/tabs.dart';
 import 'package:getx/utils/app_colors.dart' as AppColors;
 
 class MyHomePage extends StatefulWidget {
@@ -79,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage>
               ),
               const SizedBox(height: 20),
               Container(
-                height: 220,
+                height: 150,
                 child: Stack(
                   children: [
                     Positioned(
@@ -110,23 +111,26 @@ class _MyHomePageState extends State<MyHomePage>
                 ),
               ),
               Expanded(
-                child: NestedScrollView(
+                  child: NestedScrollView(
                 controller: _scrollController,
                 headerSliverBuilder: (BuildContext context, bool isScroll) {
                   return [
                     SliverAppBar(
                       pinned: true,
+                      backgroundColor: AppColors.sliverBackground,
                       bottom: PreferredSize(
                         preferredSize: const Size.fromHeight(50),
                         child: Container(
-                            margin: const EdgeInsets.all(0),
+                            margin: const EdgeInsets.only(bottom: 20, left: 5),
                             child: TabBar(
                               indicatorPadding: const EdgeInsets.all(0),
                               indicatorSize: TabBarIndicatorSize.label,
-                              labelPadding: const EdgeInsets.all(0),
+                              labelPadding: const EdgeInsets.only(left: 6, right: 6),
                               controller: _tabController,
                               isScrollable: true,
+                              
                               indicator: BoxDecoration(
+                                
                                   borderRadius: BorderRadius.circular(10),
                                   boxShadow: [
                                     BoxShadow(
@@ -135,59 +139,11 @@ class _MyHomePageState extends State<MyHomePage>
                                       offset: const Offset(0, 0),
                                     )
                                   ]),
-                              tabs: [
-                                Container(
-                                  width: 120,
-                                  height: 50,
-                                  child: const Text(
-                                    'New',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey.withOpacity(0.3),
-                                          blurRadius: 7,
-                                          offset: const Offset(0, 0),
-                                        ),
-                                      ]),
-                                ),
-                                Container(
-                                  width: 120,
-                                  height: 50,
-                                  child: const Text(
-                                    'New',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey.withOpacity(0.3),
-                                          blurRadius: 7,
-                                          offset: const Offset(0, 0),
-                                        ),
-                                      ]),
-                                ),
-                                Container(
-                                  width: 120,
-                                  height: 50,
-                                  child: const Text(
-                                    'New',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey.withOpacity(0.3),
-                                          blurRadius: 7,
-                                          offset: const Offset(0, 0),
-                                        ),
-                                      ]),
-                                )
-                              ],
+                              tabs: const [
+                                 AppTabs(text: 'New', color: AppColors.menu1Color),
+                                 AppTabs(text: 'Popular', color: AppColors.menu2Color),
+                                 AppTabs(text: 'Tranding', color: AppColors.menu3Color),
+                           ],
                             )),
                       ),
                     )
