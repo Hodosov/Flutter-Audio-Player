@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:getx/utils/app_colors.dart' as AppColors;
@@ -10,6 +13,23 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  List? popularBooks;
+
+  ReadData() async {
+  await  DefaultAssetBundle.of(context).loadString('json/popularBook.json').then((s) => {
+      setState(() {
+       popularBooks = json.decode(s);
+      })
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    ReadData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -51,21 +71,36 @@ class _MyHomePageState extends State<MyHomePage> {
                   )
                 ],
               ),
+              const SizedBox(height: 20),
               Container(
-                height: 200,
-                child: PageView.builder(
-                    controller: PageController(viewportFraction: 0.8),
-                    itemCount: 5,
-                    itemBuilder: (_, i) {
-                      return Container(
-                        height: 180,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            image: const DecorationImage(
-                                image: AssetImage('assets/images/one.jpg'))),
-                      );
-                    }),
-              )
+                height: 220,
+                child: Stack(
+                  children: [
+                    Positioned(
+                        top: 0,
+                        left: -20,
+                        right: 0,
+                        child: Container(
+                          height: 150,
+                          child: PageView.builder(
+                              controller: PageController(viewportFraction: 0.8),
+                              itemCount: popularBooks == null ? 0: popularBooks?.length, 
+                              itemBuilder: (_, i) {
+                                return Container(
+                                  margin: const EdgeInsets.only(right: 10),
+                                  height: 200,
+                                  width: MediaQuery.of(context).size.width,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      image:  DecorationImage(
+                                          image: AssetImage(popularBooks?[i]['img']))),
+                                );
+                              }),
+                        ))
+                  ],
+                ),
+              ),
+              
             ],
           ),
         )));
