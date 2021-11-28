@@ -187,6 +187,7 @@ class _MyHomePageState extends State<MyHomePage>
                                           borderRadius:
                                               BorderRadius.circular(10),
                                           image: DecorationImage(
+                                            fit: BoxFit.cover,
                                               image: AssetImage(
                                                   books?[i]['img']))),
                                     ),
