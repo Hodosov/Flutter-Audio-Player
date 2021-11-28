@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:getx/tabs.dart';
@@ -20,7 +18,7 @@ class _MyHomePageState extends State<MyHomePage>
   ScrollController? _scrollController;
   TabController? _tabController;
 
-  ReadData() async {
+  readData() async {
     await DefaultAssetBundle.of(context)
         .loadString('json/popularBook.json')
         .then((s) => {
@@ -43,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage>
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
     _scrollController = ScrollController();
-    ReadData();
+    readData();
   }
 
   @override
@@ -88,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage>
                 ],
               ),
               const SizedBox(height: 20),
-              Container(
+              SizedBox(
                 height: 150,
                 child: Stack(
                   children: [
@@ -96,7 +94,7 @@ class _MyHomePageState extends State<MyHomePage>
                         top: 0,
                         left: -20,
                         right: 0,
-                        child: Container(
+                        child: SizedBox(
                           height: 150,
                           child: PageView.builder(
                               controller: PageController(viewportFraction: 0.8),
@@ -208,7 +206,7 @@ class _MyHomePageState extends State<MyHomePage>
                                             Text(books?[i]['rating'])
                                           ],
                                         ),
-                                        SizedBox(height: 15,),
+                                        const SizedBox(height: 15,),
                                         Text(books?[i]['title'],
                                             style: const TextStyle(
                                                 fontSize: 16,
