@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:getx/home_page.dart';
 
+import 'audio_page.dart';
+
 void main() {
   runApp( const MyApp());
 }
@@ -17,6 +19,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home:const MyHomePage(),
+      // home: const DetailAudioPage()
     );
   }
 }
