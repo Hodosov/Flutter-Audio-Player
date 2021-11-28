@@ -15,7 +15,7 @@ class AppTabs extends StatelessWidget {
       height: 50,
       child: Text(
        text,
-        style: const TextStyle(color: Colors.white),
+        style: const TextStyle(color: Colors.white, fontSize: 20),
       ),
       alignment: Alignment.center,
       decoration: BoxDecoration(

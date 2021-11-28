@@ -16,6 +16,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage>
     with SingleTickerProviderStateMixin {
   List? popularBooks;
+  List? books;
   ScrollController? _scrollController;
   TabController? _tabController;
 
@@ -25,6 +26,14 @@ class _MyHomePageState extends State<MyHomePage>
         .then((s) => {
               setState(() {
                 popularBooks = json.decode(s);
+              })
+            });
+
+    await DefaultAssetBundle.of(context)
+        .loadString('json/books.json')
+        .then((s) => {
+              setState(() {
+                books = json.decode(s);
               })
             });
   }
@@ -125,12 +134,11 @@ class _MyHomePageState extends State<MyHomePage>
                             child: TabBar(
                               indicatorPadding: const EdgeInsets.all(0),
                               indicatorSize: TabBarIndicatorSize.label,
-                              labelPadding: const EdgeInsets.only(left: 6, right: 6),
+                              labelPadding:
+                                  const EdgeInsets.only(left: 6, right: 6),
                               controller: _tabController,
                               isScrollable: true,
-                              
                               indicator: BoxDecoration(
-                                
                                   borderRadius: BorderRadius.circular(10),
                                   boxShadow: [
                                     BoxShadow(
@@ -140,10 +148,15 @@ class _MyHomePageState extends State<MyHomePage>
                                     )
                                   ]),
                               tabs: const [
-                                 AppTabs(text: 'New', color: AppColors.menu1Color),
-                                 AppTabs(text: 'Popular', color: AppColors.menu2Color),
-                                 AppTabs(text: 'Tranding', color: AppColors.menu3Color),
-                           ],
+                                AppTabs(
+                                    text: 'New', color: AppColors.menu1Color),
+                                AppTabs(
+                                    text: 'Popular',
+                                    color: AppColors.menu2Color),
+                                AppTabs(
+                                    text: 'Tranding',
+                                    color: AppColors.menu3Color),
+                              ],
                             )),
                       ),
                     )
@@ -151,8 +164,89 @@ class _MyHomePageState extends State<MyHomePage>
                 },
                 body: TabBarView(
                   controller: _tabController,
-                  children: const [
-                    Material(
+                  children: [
+                    ListView.builder(
+                        itemCount: books == null ? 0 : books?.length,
+                        itemBuilder: (_, i) {
+                          return Container(
+                            margin: const EdgeInsets.only(
+                                left: 10, right: 10, top: 10, bottom: 10),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: AppColors.tabVarViewColor,
+                              ),
+                              child: Container(
+                                padding: const EdgeInsets.all(8),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: 100,
+                                      height: 160,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          image: DecorationImage(
+                                              image: AssetImage(
+                                                  books?[i]['img']))),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                        
+                                          children: [
+                                            const Icon(Icons.star,
+                                                size: 24,
+                                                color: AppColors.starColor),
+                                            const SizedBox(width: 5),
+                                            Text(books?[i]['rating'])
+                                          ],
+                                        ),
+                                        SizedBox(height: 15,),
+                                        Text(books?[i]['title'],
+                                            style: const TextStyle(
+                                                fontSize: 16,
+                                                fontFamily: 'Avenir',
+                                                fontWeight: FontWeight.bold)),
+                                        Text(
+                                          books?[i]['text'],
+                                          style: const TextStyle(
+                                              fontSize: 16,
+                                              fontFamily: 'Avenir',
+                                              color: AppColors.subTitleText),
+                                        ),
+                                        Container(
+                                          margin: const EdgeInsets.only(top: 20),
+                                          width: 60,
+                                          height: 20,
+                                          alignment: Alignment.center,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              color: AppColors.loveColor),
+                                          child: const Text(
+                                            "love",
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                fontFamily: 'Avenir',
+                                                color: Colors.white)
+                                                ,
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        }),
+                    const Material(
                       child: ListTile(
                         title: Text('Content'),
                         leading: CircleAvatar(
@@ -160,15 +254,7 @@ class _MyHomePageState extends State<MyHomePage>
                         ),
                       ),
                     ),
-                    Material(
-                      child: ListTile(
-                        title: Text('Content'),
-                        leading: CircleAvatar(
-                          backgroundColor: Colors.grey,
-                        ),
-                      ),
-                    ),
-                    Material(
+                    const Material(
                       child: ListTile(
                         title: Text('Content'),
                         leading: CircleAvatar(
