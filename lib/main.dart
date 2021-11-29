@@ -18,8 +18,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home:const MyHomePage(),
-      // home: const DetailAudioPage()
+      // home:const MyHomePage(),
+      home: const DetailAudioPage()
     );
   }
 }

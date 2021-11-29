@@ -1,5 +1,8 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:getx/utils/app_colors.dart' as AppColors;
+
+import 'audio_file.dart';
 
 class DetailAudioPage extends StatefulWidget {
   const DetailAudioPage({Key? key}) : super(key: key);
@@ -9,6 +12,15 @@ class DetailAudioPage extends StatefulWidget {
 }
 
 class _DetailAudioPageState extends State<DetailAudioPage> {
+  late AudioPlayer advancePlayer;
+
+  @override
+  void initState() {
+    super.initState();
+    advancePlayer = AudioPlayer();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     final double screenHeight = MediaQuery.of(context).size.height;
@@ -22,8 +34,7 @@ class _DetailAudioPageState extends State<DetailAudioPage> {
               left: 0,
               right: 0,
               height: screenHeight / 3,
-              child: Container(
-                  )),
+              child: Container()),
           Positioned(
               top: 0,
               left: 0,
@@ -68,7 +79,8 @@ class _DetailAudioPageState extends State<DetailAudioPage> {
                       style: TextStyle(
                         fontSize: 20,
                       ),
-                    )
+                    ),
+                    AudioFile(advancePlayer: advancePlayer)
                   ],
                 ),
               )),
@@ -79,7 +91,7 @@ class _DetailAudioPageState extends State<DetailAudioPage> {
               height: screenHeight * 0.17,
               child: Container(
                 decoration: BoxDecoration(
-                  color: AppColors.audioGrayBackground,
+                    color: AppColors.audioGrayBackground,
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(color: Colors.white, width: 2)),
                 child: Padding(
