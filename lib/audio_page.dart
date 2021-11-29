@@ -80,7 +80,7 @@ class _DetailAudioPageState extends State<DetailAudioPage> {
                         fontSize: 20,
                       ),
                     ),
-                    AudioFile(advancePlayer: advancePlayer)
+                    AudioFile(advancePlayer: advancePlayer),
                   ],
                 ),
               )),
